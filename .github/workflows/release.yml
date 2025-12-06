@@ -86,6 +86,8 @@ jobs:
         cmake .. -G "Visual Studio 17 2022" -A x64 -DBUILD_STATIC=OFF -DBUILD_LENSTOOL=OFF -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/build/install -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DGLIB2_BASE_DIR=c:/vcpkg/installed/x64-windows
         cmake --build . --config Release
         cmake --build . --target install
+    - name: Copy dependency DLLs
+      run: Copy-Item -Path C:\vcpkg\installed\x64-windows\bin\*.dll -Destination ${{ github.workspace }}\build\install\lib\
     - name: Create package
       run: Compress-Archive -Path build/install/* -DestinationPath lensfun-windows.zip
     - name: Upload Release Asset
