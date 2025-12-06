@@ -76,10 +76,11 @@ jobs:
       run: |
         cd build/install/lib
         # -of: 覆盖已存在文件
-        # -b:  指定要处理的二进制文件 (liblensfun.dylib)
+        # -b:  捆绑依赖项
+        # -x:  指定要修复的二进制文件
         # -d:  依赖库复制到的目标目录 (当前目录 .)
         # -p:  修改依赖路径前缀为相对路径 (@loader_path/)
-        dylibbundler -of -b liblensfun.dylib -d . -p @loader_path/
+        dylibbundler -of -b -x liblensfun.dylib -d . -p @loader_path/
         
         # 打印一下结果，方便在 GitHub Action 日志中检查
         echo "=== Deployment check ==="
