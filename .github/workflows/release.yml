@@ -67,6 +67,13 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Cache vcpkg dependencies
+      uses: actions/cache@v4
+      with:
+        path: C:\vcpkg
+        key: ${{ runner.os }}-vcpkg-${{ hashFiles('.github/workflows/release.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-vcpkg-
     - name: Install vcpkg dependencies
       run: |
         vcpkg install glib libpng --triplet=x64-windows
