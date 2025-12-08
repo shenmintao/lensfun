@@ -456,7 +456,7 @@ class LCPLens:
         elif self.maker == "Lomography": mounts.update({"Nikon F AF", "Canon EF"})
         if not mounts:
             print("Warning: Fall back to default mounts for {} / {}.".format(self.maker, self.model))
-            mounts = {"Sigma SA", "Nikon F AF", "Sony Alpha", "Pentax KAF", "Canon EF", "Minolta AF", "Canon FD", "Olympus OM", "4/3 System"}
+            mounts = {"Sigma SA", "Nikon F AF", "Sony Alpha", "Pentax KAF", "Canon EF", "Minolta AF", "Canon FD", "Olympus OM", "4/3 System","Sony E","Canon RF","Nikon Z","Fujifilm X","Leica L"}
         elements = []
         for mount in mounts:
             element = ElementTree.Element("mount")
