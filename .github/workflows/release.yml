@@ -127,7 +127,7 @@ jobs:
         cd build
         cmake .. -G "Visual Studio 17 2022" -A x64 -DBUILD_STATIC=OFF -DBUILD_LENSTOOL=OFF -DBUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/build/install -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DGLIB2_BASE_DIR=c:/vcpkg/installed/x64-windows
         cmake --build . --config Release
-        cmake --build . --target install
+        cmake --build . --target install --config Release
 
     # Windows 下手动复制 DLL (你原来的逻辑是对的)
     - name: Copy dependency DLLs
