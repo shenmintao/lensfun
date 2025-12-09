@@ -121,38 +121,6 @@ IF(BUILD_STATIC)
   ADD_DEFINITIONS(-DCONF_LENSFUN_STATIC)
 ENDIF()
 
-
-# some windows and MSVC specific settings
-IF(WIN32)
-
-  IF (MSVC)
-    IF(BUILD_WITH_MSVC_STATIC_RUNTIME)
-      # compile everything for the static C runtime
-      FOREACH(TYPE C CXX)
-        # makefiles use blank configuration
-        FOREACH(CFG "_DEBUG" "_MINSIZEREL" "_RELEASE" "_RELWITHDEBINFO")
-          SET(NEW_FLAGS "${CMAKE_${TYPE}_FLAGS${CFG}}")
-          # fix up static libc flags
-          STRING(REPLACE "/MD" "/MT" NEW_FLAGS "${NEW_FLAGS}")
-          # *FORCE* to override what's already placed into the cache
-          SET(CMAKE_${TYPE}_FLAGS${CFG} "${NEW_FLAGS}" CACHE STRING
-            "CMAKE_${TYPE}_FLAGS${CFG} (overwritten to ensure static build)" FORCE)
-        ENDFOREACH(CFG)
-      ENDFOREACH(TYPE)
-      # link only with the static C runtime !! THIS IS A MUST !!
-      SET(NEW_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
-      # ensure that the flags are not duplicaated on subsequent runs
-      STRING(REPLACE " /NODEFAULTLIB:\"MSVCRT.lib\" /NODEFAULTLIB:\"MSVCRTd.lib\"" "" NEW_FLAGS "${NEW_FLAGS}")
-      # note that flag names (NODEFAULTLIB) etc.) are case sensitive
-      SET(CMAKE_EXE_LINKER_FLAGS
-          "${NEW_FLAGS} /NODEFAULTLIB:\"MSVCRT.lib\" /NODEFAULTLIB:\"MSVCRTd.lib\""
-          CACHE STRING "for MSVC" FORCE
-      )
-    ENDIF()
-  ENDIF(MSVC)
-ENDIF(WIN32)
-
-
 # create config.h file
 CONFIGURE_FILE(include/lensfun/config.h.in.cmake ${CMAKE_BINARY_DIR}/config.h)
 # create lensfun.h file
